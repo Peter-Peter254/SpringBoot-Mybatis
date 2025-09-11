@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.customer.CustomerMapper">
+
+    <resultMap id="CustomerResultMap" type="com.example.demo.customer.Customer">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="email" property="email"/>
+        <result column="phone" property="phone"/>
+        <result column="created_at" property="createdAt"/>
+        <result column="updated_at" property="updatedAt"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, name, email, phone, created_at, updated_at
+    </sql>
+
+    <insert id="insert" parameterType="com.example.demo.customer.Customer"
+            useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO customers (name, email, phone)
+        VALUES (#{name}, #{email}, #{phone})
+    </insert>
+
+    <select id="findById" parameterType="long" resultMap="CustomerResultMap">
+        SELECT <include refid="Base_Column_List"/>
+        FROM customers
+        WHERE id = #{id}
+    </select>
+
+    <select id="findAll" resultMap="CustomerResultMap">
+        SELECT <include refid="Base_Column_List"/>
+        FROM customers
+        ORDER BY id DESC
+        LIMIT #{limit} OFFSET #{offset}
+    </select>
+
+    <select id="countAll" resultType="long">
+        SELECT COUNT(*) FROM customers
+    </select>
+
+    <update id="update" parameterType="com.example.demo.customer.Customer">
+        UPDATE customers
+        SET name = #{name}, email = #{email}, phone = #{phone}
+        WHERE id = #{id}
+    </update>
+
+    <delete id="delete" parameterType="long">
+        DELETE FROM customers WHERE id = #{id}
+    </delete>
+
+</mapper>
