@@ -9,6 +9,7 @@ public class Customer {
     private String phone;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
+    private Long orgId;
 
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
@@ -22,4 +23,6 @@ public class Customer {
     public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
     public LocalDateTime getUpdatedAt() { return updatedAt; }
     public void setUpdatedAt(LocalDateTime updatedAt) { this.updatedAt = updatedAt; }
+    public Long getOrgId(){return orgId;}
+    public void setOrgId(Long x){this.orgId=x;}
 }

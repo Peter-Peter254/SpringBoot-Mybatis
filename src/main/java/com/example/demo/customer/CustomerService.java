@@ -1,6 +1,7 @@
 package com.example.demo.customer;
 
 import org.springframework.stereotype.Service;
+import com.example.demo.security.TenantContext;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -12,21 +13,31 @@ public class CustomerService {
 
     @Transactional
     public Customer create(Customer c) {
+        c.setOrgId(TenantContext.getOrgId());   // <-- inject orgId on create
         mapper.insert(c);
         return c;
     }
 
-    public Customer get(Long id) { return mapper.findById(id); }
-
-    public List<Customer> list(int limit, int offset) {
-        return mapper.findAll(limit, offset);
+    public Customer get(Long id) {
+        return mapper.findById(TenantContext.getOrgId(), id);
     }
 
-    public long count() { return mapper.countAll(); }
+    public List<Customer> list(int limit, int offset) {
+        return mapper.findAll(TenantContext.getOrgId(), limit, offset);
+    }
+
+    public long count() {
+        return mapper.countAll(TenantContext.getOrgId());
+    }
 
     @Transactional
-    public boolean update(Customer c) { return mapper.update(c) > 0; }
+    public boolean update(Customer c) {
+        c.setOrgId(TenantContext.getOrgId());
+        return mapper.update(c) > 0;
+    }
 
     @Transactional
-    public boolean delete(Long id) { return mapper.delete(id) > 0; }
+    public boolean delete(Long id) {
+        return mapper.delete(TenantContext.getOrgId(), id) > 0;
+    }
 }

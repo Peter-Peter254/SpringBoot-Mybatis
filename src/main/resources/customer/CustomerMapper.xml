@@ -1,53 +1,54 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper
-        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.demo.customer.CustomerMapper">
 
-    <resultMap id="CustomerResultMap" type="com.example.demo.customer.Customer">
-        <id column="id" property="id"/>
-        <result column="name" property="name"/>
-        <result column="email" property="email"/>
-        <result column="phone" property="phone"/>
-        <result column="created_at" property="createdAt"/>
-        <result column="updated_at" property="updatedAt"/>
+    <resultMap id="CustomerMap" type="com.example.demo.customer.Customer">
+        <id     property="id" column="id"/>
+        <result property="orgId" column="org_id"/>
+        <result property="name" column="name"/>
+        <result property="email" column="email"/>
+        <result property="phone" column="phone"/>
+        <result property="createdAt" column="created_at"/>
+        <result property="updatedAt" column="updated_at"/>
     </resultMap>
 
-    <sql id="Base_Column_List">
-        id, name, email, phone, created_at, updated_at
-    </sql>
-
-    <insert id="insert" parameterType="com.example.demo.customer.Customer"
-            useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO customers (name, email, phone)
-        VALUES (#{name}, #{email}, #{phone})
-    </insert>
-
-    <select id="findById" parameterType="long" resultMap="CustomerResultMap">
-        SELECT <include refid="Base_Column_List"/>
+    <select id="findById" resultMap="CustomerMap">
+        SELECT id, org_id, name, email, phone, created_at, updated_at
         FROM customers
-        WHERE id = #{id}
+        WHERE org_id = #{orgId} AND id = #{id}
     </select>
 
-    <select id="findAll" resultMap="CustomerResultMap">
-        SELECT <include refid="Base_Column_List"/>
+    <select id="findAll" resultMap="CustomerMap">
+        SELECT id, org_id, name, email, phone, created_at, updated_at
         FROM customers
-        ORDER BY id DESC
+        WHERE org_id = #{orgId}
+        ORDER BY id
         LIMIT #{limit} OFFSET #{offset}
     </select>
 
     <select id="countAll" resultType="long">
-        SELECT COUNT(*) FROM customers
+        SELECT COUNT(*) FROM customers WHERE org_id = #{orgId}
     </select>
+
+    <insert id="insert" parameterType="com.example.demo.customer.Customer"
+            useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+        INSERT INTO customers (org_id, name, email, phone)
+        VALUES (#{orgId}, #{name}, #{email}, #{phone})
+        RETURNING id
+    </insert>
 
     <update id="update" parameterType="com.example.demo.customer.Customer">
         UPDATE customers
-        SET name = #{name}, email = #{email}, phone = #{phone}
-        WHERE id = #{id}
+        SET name = #{name},
+        email = #{email},
+        phone = #{phone},
+        updated_at = now()
+        WHERE id = #{id} AND org_id = #{orgId}
     </update>
 
-    <delete id="delete" parameterType="long">
-        DELETE FROM customers WHERE id = #{id}
+    <delete id="delete">
+        DELETE FROM customers
+        WHERE id = #{id} AND org_id = #{orgId}
     </delete>
 
 </mapper>
