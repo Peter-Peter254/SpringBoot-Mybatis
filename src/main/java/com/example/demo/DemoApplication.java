@@ -5,7 +5,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-@MapperScan("com.example.demo")
+@MapperScan(
+        basePackages = "com.example.demo",
+        annotationClass = org.apache.ibatis.annotations.Mapper.class
+)
 public class DemoApplication {
     public static void main(String[] args) {
         SpringApplication.run(DemoApplication.class, args);

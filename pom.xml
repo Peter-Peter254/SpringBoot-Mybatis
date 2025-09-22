@@ -20,6 +20,16 @@
     <properties>
         <java.version>21</java.version>
     </properties>
+    <profiles>
+        <profile>
+            <id>db-local</id>
+            <properties>
+                <flyway.url>jdbc:postgresql://localhost:5432/billing1</flyway.url>
+                <flyway.user>postgres</flyway.user>
+                <flyway.password>peter</flyway.password>
+            </properties>
+        </profile>
+    </profiles>
 
     <dependencies>
         <!-- Web/API + Validation -->
@@ -110,6 +120,18 @@
               <version>1.4.2</version>
             </plugin>
             -->
+            <plugin>
+                <groupId>org.flywaydb</groupId>
+                <artifactId>flyway-maven-plugin</artifactId>
+                <version>11.7.2</version>
+                <configuration>
+                    <!-- Point the plugin to your SQL files -->
+                    <locations>
+                        <location>filesystem:src/main/resources/db/migration</location>
+                    </locations>
+                    <!-- We’ll pass URL/user/password via -D properties or a Maven profile -->
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 </project>

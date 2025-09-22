@@ -1,7 +1,7 @@
-package com.example.demo.customer;
+package com.example.demo.entities.customer;
 
 import org.springframework.stereotype.Service;
-import com.example.demo.security.TenantContext;
+import com.example.demo.utils.security.TenantContext;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;

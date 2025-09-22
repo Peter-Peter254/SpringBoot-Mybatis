@@ -1,4 +1,4 @@
-package com.example.demo.security;
+package com.example.demo.utils.security;
 
 public final class TenantContext {
     private static final ThreadLocal<Long> ORG_ID = new ThreadLocal<>();

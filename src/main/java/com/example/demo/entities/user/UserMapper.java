@@ -1,4 +1,4 @@
-package com.example.demo.user;
+package com.example.demo.entities.user;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;

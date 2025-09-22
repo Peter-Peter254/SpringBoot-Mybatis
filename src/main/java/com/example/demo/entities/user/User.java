@@ -1,4 +1,4 @@
-package com.example.demo.user;
+package com.example.demo.entities.user;
 
 import java.time.OffsetDateTime;
 

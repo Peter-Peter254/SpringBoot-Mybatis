@@ -1,8 +1,8 @@
-package com.example.demo.auth;
+package com.example.demo.utils.auth;
 
-import com.example.demo.security.JwtService;
-import com.example.demo.user.User;
-import com.example.demo.user.UserMapper;
+import com.example.demo.utils.security.JwtService;
+import com.example.demo.entities.user.User;
+import com.example.demo.entities.user.UserMapper;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
