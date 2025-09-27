@@ -1,8 +1,8 @@
-package com.example.demo.customer;
+package com.example.demo.entities.customer;
 
-import com.example.demo.customer.CustomerDtos.CreateRequest;
-import com.example.demo.customer.CustomerDtos.UpdateRequest;
-import com.example.demo.customer.CustomerDtos.PageResponse;
+import com.example.demo.entities.customer.CustomerDtos.CreateRequest;
+import com.example.demo.entities.customer.CustomerDtos.UpdateRequest;
+import com.example.demo.entities.customer.CustomerDtos.PageResponse;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
